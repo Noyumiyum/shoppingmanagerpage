@@ -107,4 +107,24 @@ public class ProductDAO {
 		}
 		return pVo;
 	}
+	
+	public void updateProduct(ProductVO pVo) {
+	      String sql = "update product set name=?, price=?, pictureurl=?, description=? where code=?";
+	      Connection conn = null;
+	      PreparedStatement pstmt = null;
+	      try {
+	         conn = DBManager.getConnection();
+	         pstmt = conn.prepareStatement(sql);
+	         pstmt.setString(1, pVo.getName());
+	         pstmt.setInt(2, pVo.getPrice());
+	         pstmt.setString(3, pVo.getPictureUrl());
+	         pstmt.setString(4, pVo.getDescription());
+	         pstmt.setInt(5, pVo.getCode());
+	         pstmt.executeUpdate();// 쿼리문 실행한다.
+	      } catch (Exception e) {
+	         e.printStackTrace();
+	      } finally {
+	         DBManager.close(conn, pstmt);
+	      }
+	   }
 }
